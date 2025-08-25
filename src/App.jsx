@@ -11,7 +11,7 @@ import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import Popup from "./components/Popup/Popup";
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick-theme.css";  
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -33,7 +33,7 @@ const App = () => {
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200">
       <Navbar handleOrderPopup={handleOrderPopup} />
-      <Hero handleOrderPopup={handleOrderPopup} />
+      <Hero handleOrderPopup={handleOrderPopup}   />
       <Products />
       <TopProducts handleOrderPopup={handleOrderPopup} />
       <Banner />
