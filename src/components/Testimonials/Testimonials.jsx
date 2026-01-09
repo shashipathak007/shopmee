@@ -29,15 +29,15 @@ const TestimonialData = [
 ];
 
 const Testimonials = () => {
-  var settings = {
+  const settings = {
     dots: true,
     arrows: false,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
-    cssEase: "linear",
+    autoplaySpeed: 3000,
+    cssEase: "ease-in-out",
     pauseOnHover: true,
     pauseOnFocus: true,
     responsive: [
@@ -46,7 +46,6 @@ const Testimonials = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-          infinite: true,
         },
       },
       {
@@ -54,7 +53,6 @@ const Testimonials = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          initialSlide: 2,
         },
       },
       {
@@ -68,48 +66,43 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="py-10 mb-10">
+    <div className="py-16 mb-10 dark:bg-gray-950 dark:text-white transition-colors duration-300">
       <div className="container">
-        {/* header section */}
-        <div className="text-center  mb-10 max-w-[600px] mx-auto">
-          <p data-aos="fade-up" className="text-sm text-primary">
+        <div className="text-center mb-12 max-w-[600px] mx-auto space-y-2">
+          <p data-aos="fade-up" className="text-sm text-primary font-bold uppercase tracking-widest">
             What our customers are saying
           </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
+          <h1 data-aos="fade-up" data-aos-delay="100" className="text-3xl sm:text-4xl font-bold">
             Testimonials
           </h1>
-          <p data-aos="fade-up" className="text-xs text-gray-400">
+          <p data-aos="fade-up" data-aos-delay="200" className="text-sm text-gray-400">
             Hear directly from our satisfied customers about their amazing experiences with ShopMe.
           </p>
         </div>
 
-        {/* Testimonial cards */}
         <div data-aos="zoom-in">
           <Slider {...settings}>
             {TestimonialData.map((data) => (
-              <div className="my-6">
-                <div
-                  key={data.id}
-                  className="flex flex-col gap-4 shadow-lg py-8 px-6 mx-4 rounded-xl dark:bg-slate-600  bg-primary/10 relative"
-                >
+              <div key={data.id} className="my-6">
+                <div className="flex flex-col gap-4 shadow-xl py-8 px-6 mx-4 rounded-2xl dark:bg-gray-800 bg-primary/10 relative group hover:bg-primary/20 dark:hover:bg-gray-700 transition-all duration-300 min-h-[250px]">
                   <div className="mb-4">
                     <img
                       src={data.img}
-                      alt=""
-                      className="rounded-full w-20 h-20"
+                      alt={data.name}
+                      className="rounded-full w-20 h-20 object-cover border-4 border-white dark:border-gray-600 shadow-md"
                     />
                   </div>
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="space-y-3">
-                      <p className="text-xs dark:text-slate-300 text-gray-500">
-                        {data.text}
-                      </p>
-                      <h1 className="text-xl font-bold dark:text-slate-300 text-black/80 dark:text-light">
-                        {data.name}
-                      </h1>
-                    </div>
+                  <div className="flex flex-col gap-3">
+                    <p className="text-sm text-gray-500 dark:text-gray-300 leading-relaxed italic">
+                      "{data.text}"
+                    </p>
+                    <h1 className="text-xl font-bold text-black/80 dark:text-white">
+                      {data.name}
+                    </h1>
                   </div>
-                  <p className="text-black/20  text-9xl font-serif absolute top-0 right-0"></p>
+                  <p className="text-primary/10 text-9xl font-serif absolute top-0 right-4 pointer-events-none">
+                    ,,
+                  </p>
                 </div>
               </div>
             ))}

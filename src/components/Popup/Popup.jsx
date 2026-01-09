@@ -1,47 +1,28 @@
-import React from "react";
-import { IoCloseOutline } from "react-icons/io5";
+import { X } from "lucide-react";
 
 const Popup = ({ orderPopup, setOrderPopup }) => {
+  if (!orderPopup) return null;
+
   return (
-    <>
-      {orderPopup && (
-        <div className="popup">
-          <div className="h-screen w-screen fixed top-0 left-0 bg-black/50 z-50 backdrop-blur-sm flex justify-center items-center">
-            <div className="fixed bg-white dark:bg-gray-900 rounded-lg shadow-xl duration-200 w-[90%] max-w-[400px] p-6">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700 mb-4">
-                <h1 className="text-xl font-semibold">Order Now</h1>
-                <IoCloseOutline
-                  className="text-3xl cursor-pointer text-gray-500 hover:text-red-500 transition-colors duration-200"
-                  onClick={() => setOrderPopup(false)}
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full rounded-full border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 mb-4 focus:outline-none focus:border-primary transition-all duration-200"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full rounded-full border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 mb-4 focus:outline-none focus:border-primary transition-all duration-200"
-                />
-                <input
-                  type="text"
-                  placeholder="Address"
-                  className="w-full rounded-full border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 mb-6 focus:outline-none focus:border-primary transition-all duration-200"
-                />
-                <div className="flex justify-center">
-                  <button className="bg-gradient-to-r from-primary to-secondary hover:scale-105 duration-200 text-white py-2 px-6 rounded-full shadow-md text-lg">
-                    Order Now
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-slate-900 rounded-xl w-[90%] max-w-md p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Place Order</h2>
+          <button onClick={() => setOrderPopup(false)}>
+            <X />
+          </button>
         </div>
-      )}
-    </>
+
+        <form className="space-y-4">
+          <input className="w-full p-3 rounded border dark:bg-slate-800" placeholder="Name" />
+          <input className="w-full p-3 rounded border dark:bg-slate-800" placeholder="Email" />
+          <textarea className="w-full p-3 rounded border dark:bg-slate-800" placeholder="Address" />
+          <button className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700">
+            Confirm Order
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

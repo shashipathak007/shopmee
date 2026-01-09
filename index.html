@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/assets/hero/sale.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ECommerce</title>
+    
+    <title>ShopMe | Your One-Stop Fashion Destination</title>
+    <meta name="title" content="ShopMe | Your One-Stop Fashion Destination" />
+    <meta name="description" content="Explore the best deals on Men's wear, Women's wear, and Electronics. Quality products with fast delivery." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+    
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
