@@ -57,7 +57,7 @@ const Products = () => {
   return (
     <section className="py-16 dark:bg-gray-950 dark:text-white transition-colors duration-300">
       <div className="container px-4">
-  
+        {/* Header Section */}
         <div className="text-center mb-12 max-w-[600px] mx-auto space-y-2">
           <p data-aos="fade-up" className="text-sm text-primary font-bold uppercase tracking-widest">
             Top Selling Products
@@ -70,6 +70,7 @@ const Products = () => {
           </p>
         </div>
 
+        {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 place-items-center">
           {ProductsData.map((data) => (
             <div
@@ -104,7 +105,7 @@ const Products = () => {
           ))}
         </div>
 
-      
+        {/* View All Button */}
         <div className="flex justify-center mt-12">
           <button className="bg-gradient-to-r from-primary to-secondary text-white py-2 px-10 rounded-full hover:scale-105 duration-300 shadow-lg font-semibold uppercase tracking-wide">
             View All Products

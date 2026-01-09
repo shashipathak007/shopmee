@@ -1,26 +1,82 @@
-import { X } from "lucide-react";
+import React, { useRef } from "react";
+import { IoCloseOutline } from "react-icons/io5";
 
 const Popup = ({ orderPopup, setOrderPopup }) => {
+  const modalRef = useRef();
+
+  // Close popup when clicking on the backdrop
+  const closePopup = (e) => {
+    if (modalRef.current === e.target) {
+      setOrderPopup(false);
+    }
+  };
+
   if (!orderPopup) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-slate-900 rounded-xl w-[90%] max-w-md p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Place Order</h2>
-          <button onClick={() => setOrderPopup(false)}>
-            <X />
+    <div 
+      ref={modalRef}
+      onClick={closePopup}
+      className="fixed inset-0 h-screen w-screen bg-black/50 z-50 backdrop-blur-sm flex justify-center items-center p-4"
+    >
+      <div 
+        data-aos="zoom-in"
+        className="bg-white dark:bg-gray-900 dark:text-white rounded-xl shadow-2xl duration-300 w-full max-w-[400px] overflow-hidden"
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h1 className="text-xl font-bold">Place Your Order</h1>
+          <button 
+            onClick={() => setOrderPopup(false)}
+            aria-label="Close modal"
+          >
+            <IoCloseOutline className="text-3xl text-gray-400 hover:text-primary transition-colors" />
           </button>
         </div>
 
-        <form className="space-y-4">
-          <input className="w-full p-3 rounded border dark:bg-slate-800" placeholder="Name" />
-          <input className="w-full p-3 rounded border dark:bg-slate-800" placeholder="Email" />
-          <textarea className="w-full p-3 rounded border dark:bg-slate-800" placeholder="Address" />
-          <button className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700">
-            Confirm Order
-          </button>
-        </form>
+        {/* Body */}
+        <div className="p-6">
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium ml-1">Full Name</label>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium ml-1">Email Address</label>
+              <input
+                type="email"
+                placeholder="example@gmail.com"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium ml-1">Delivery Address</label>
+              <textarea
+                placeholder="Your full address"
+                rows="3"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all resize-none"
+                required
+              />
+            </div>
+
+            <div className="mt-2">
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:scale-105 active:scale-95 duration-200 text-white py-3 rounded-lg shadow-lg font-bold text-lg"
+              >
+                Confirm Order
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
