@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
+import { motion } from "framer-motion";
 import Image1 from "../../assets/hero/women.png";
 import Image2 from "../../assets/hero/shopping.png";
 import Image3 from "../../assets/hero/sale.png";
@@ -41,60 +42,67 @@ const Hero = ({ handleOrderPopup }) => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-[550px] sm:min-h-[700px] bg-gray-100 dark:bg-gray-950 flex justify-center items-center transition-colors duration-300">
+    <section id="home" className="relative overflow-hidden min-h-[600px] sm:min-h-[800px] bg-gray-50 dark:bg-gray-950 flex justify-center items-center transition-all duration-500">
       
-      {/* Background Pattern - Improved Opacity & Positioning */}
-      <div className="h-[700px] w-[700px] bg-gradient-to-r from-primary/40 to-secondary/40 absolute -top-1/2 right-0 rounded-3xl rotate-45 -z-0 opacity-50 blur-3xl pointer-events-none"></div>
+      {/* Dynamic Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
-      <div className="container pb-8 sm:pb-0 pt-10 sm:pt-0">
+      <div className="container relative z-10 py-20">
         <Slider {...settings}>
           {ImageList.map((data) => (
             <div key={data.id}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:px-10">
                 
-                {/* Text content */}
-                <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
-                  <h1
-                    data-aos="zoom-out"
-                    data-aos-duration="500"
-                    className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight text-gray-900 dark:text-white"
+                {/* Text Content */}
+                <div className="flex flex-col justify-center gap-6 text-center lg:text-left order-2 lg:order-1 px-4 lg:px-0">
+                  <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[1.1] text-gray-900 dark:text-white"
                   >
                     {data.title}
-                  </h1>
-                  <p
-                    data-aos="fade-up"
-                    data-aos-duration="500"
-                    data-aos-delay="100"
-                    className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-lg mx-auto sm:mx-0"
+                  </motion.h1>
+                  <motion.p
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
                   >
                     {data.description}
-                  </p>
-                  <div
-                    data-aos="fade-up"
-                    data-aos-duration="500"
-                    data-aos-delay="300"
+                  </motion.p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
                   >
                     <button
                       onClick={handleOrderPopup}
-                      className="bg-gradient-to-r from-primary to-secondary hover:scale-105 transition-all duration-300 text-white py-2 px-6 sm:py-3 sm:px-8 rounded-full shadow-xl font-bold text-lg active:scale-95"
+                      className="group relative bg-primary text-white py-5 px-12 rounded-full shadow-2xl shadow-primary/30 font-black text-xl active:scale-95 transition-all overflow-hidden"
                     >
-                      Shop Now
+                      <span className="relative z-10 flex items-center gap-2">Shop Now</span>
+                      <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none" />
                     </button>
-                  </div>
+                  </motion.div>
                 </div>
 
-                {/* Image content */}
-                <div className="order-1 sm:order-2">
-                  <div
-                    data-aos="zoom-in"
-                    className="relative z-10"
+                {/* Animated Image Content */}
+                <div className="order-1 lg:order-2 flex justify-center items-center">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 100, delay: 0.1 }}
+                    className="relative"
                   >
+                    {/* Glow effect behind image */}
+                    <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-75 animate-pulse" />
                     <img
                       src={data.img}
                       alt={data.title}
-                      className="w-[300px] h-[300px] sm:h-[450px] sm:w-[450px] sm:scale-110 lg:scale-120 object-contain mx-auto drop-shadow-[-10px_10px_12px_rgba(0,0,0,0.5)]"
+                      className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] lg:scale-110 object-contain mx-auto drop-shadow-[30px_35px_35px_rgba(0,0,0,0.25)] hover:scale-105 transition-transform duration-700 pointer-events-none"
                     />
-                  </div>
+                  </motion.div>
                 </div>
 
               </div>

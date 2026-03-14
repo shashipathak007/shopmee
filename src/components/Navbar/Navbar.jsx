@@ -1,106 +1,146 @@
-import React from "react";
-import { IoMdSearch } from "react-icons/io";
-import { FaCartShopping } from "react-icons/fa6";
-import { FaCaretDown } from "react-icons/fa";
-import { FiShoppingBag } from "react-icons/fi";
+import React, { useState } from "react";
+import { Search, ShoppingCart, ChevronDown, Menu, X } from "lucide-react";
 import DarkMode from "./DarkMode";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Menu = [
-  { id: 1, name: "Home", link: "/#" },
-  { id: 2, name: "Top Rated", link: "/#services" },
-  { id: 3, name: "Kids Wear", link: "/#" },
-  { id: 4, name: "Mens Wear", link: "/#" },
-  { id: 5, name: "Electronics", link: "/#" },
+const NavLinks = [
+  { id: 1, name: "Home", link: "/#home" },
+  { id: 2, name: "Trending", link: "/#trending" },
+  { id: 3, name: "New Arrivals", link: "/#arrivals" },
+  { id: 4, name: "Categories", link: "/#categories" },
 ];
 
 const DropdownLinks = [
-  { id: 1, name: "Trending Products", link: "/#" },
-  { id: 2, name: "Best Selling", link: "/#" },
-  { id: 3, name: "Top Rated", link: "/#" },
+  { id: 1, name: "Best Selling", link: "/#trending" },
+  { id: 2, name: "Top Rated", link: "/#trending" },
+  { id: 3, name: "Limited Edition", link: "/#trending" },
 ];
 
 const Navbar = ({ handleOrderPopup }) => {
-  return (
-    <nav className="shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
-      {/* Upper Navbar */}
-      <div className="bg-primary/40 py-2">
-        <div className="container flex justify-between items-center">
-          <div>
-            <a href="#" className="font-bold text-2xl sm:text-3xl flex gap-2 items-center">
-              <FiShoppingBag className="text-primary" />
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                ShopMe
-              </span>
-            </a>
-          </div>
+  const [mobileMenu, setMobileMenu] = useState(false);
 
-          {/* Search bar and buttons */}
-          <div className="flex justify-between items-center gap-4">
-            <div className="relative group hidden sm:block">
+  return (
+    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-lg border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center py-4">
+          {/* Logo */}
+          <motion.a 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            href="/" 
+            className="text-2xl font-black flex items-center gap-2 group"
+          >
+            <div className="bg-primary p-1.5 rounded-lg">
+              <ShoppingCart className="text-white" size={24} />
+            </div>
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              ShopMe
+            </span>
+          </motion.a>
+
+          {/* Desktop Menu */}
+          <ul className="hidden lg:flex items-center gap-8">
+            {NavLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={link.link}
+                  className="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors uppercase tracking-widest relative group"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                </a>
+              </li>
+            ))}
+            {/* Simple Dropdown */}
+            <li className="group relative cursor-pointer">
+              <span className="flex items-center gap-1 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-primary uppercase tracking-widest transition-colors">
+                Quick Links
+                <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
+              </span>
+              <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-100 dark:border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                {DropdownLinks.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.link}
+                    className="block px-4 py-2.5 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </li>
+          </ul>
+
+          {/* Right Actions */}
+          <div className="flex items-center gap-4">
+            {/* Search */}
+            <div className="hidden sm:flex relative group">
               <input
                 type="text"
-                placeholder="Search"
-                className="w-[200px] group-hover:w-[280px] transition-all duration-300 rounded-full border border-gray-300 py-1 px-3 text-sm focus:outline-none focus:border-1 focus:border-primary dark:border-gray-500 dark:bg-gray-800"
+                placeholder="Search..."
+                className="w-40 focus:w-64 transition-all duration-500 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 py-2 px-4 text-sm outline-none focus:ring-2 focus:ring-primary/50"
               />
-              <IoMdSearch className="text-gray-500 group-hover:text-primary absolute top-1/2 -translate-y-1/2 right-3 transition-colors" />
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={18} />
             </div>
 
-            {/* Order Button */}
-            <button
+            {/* Cart */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleOrderPopup}
-              className="bg-gradient-to-r from-primary to-secondary transition-all duration-200 text-white py-1.5 px-4 rounded-full flex items-center gap-3 group"
+              className="bg-primary text-white p-2.5 rounded-full shadow-lg hover:shadow-primary/30 transition-shadow relative"
             >
-              <span className="group-hover:block hidden transition-all duration-200">
-                Order
+              <ShoppingCart size={20} />
+              <span className="absolute -top-1 -right-1 bg-white text-primary text-[10px] h-4 w-4 rounded-full flex items-center justify-center font-bold border border-primary">
+                0
               </span>
-              <FaCartShopping className="text-xl text-white drop-shadow-sm cursor-pointer" />
-            </button>
+            </motion.button>
 
-            {/* Dark Mode Switch */}
             <DarkMode />
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="lg:hidden p-2"
+              onClick={() => setMobileMenu(!mobileMenu)}
+            >
+              {mobileMenu ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Lower Navbar (Links) */}
-      <div className="flex justify-center border-t border-primary/10">
-        <ul className="sm:flex hidden items-center gap-4">
-          {Menu.map((data) => (
-            <li key={data.id}>
-              <a
-                href={data.link}
-                className="inline-block px-4 py-2 hover:text-primary font-semibold transition-colors"
-              >
-                {data.name}
-              </a>
-            </li>
-          ))}
-          {/* Simple Dropdown and Links */}
-          <li className="group relative cursor-pointer">
-            <span className="flex items-center gap-[2px] py-2 font-semibold">
-              Trending Products
-              <span>
-                <FaCaretDown className="transition-all duration-200 group-hover:rotate-180" />
-              </span>
-            </span>
-            {/* Dropdown Menu */}
-            <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white dark:bg-gray-800 p-2 text-black dark:text-white shadow-xl mt-[-2px]">
-              <ul className="space-y-2">
-                {DropdownLinks.map((data) => (
-                  <li key={data.id}>
-                    <a
-                      href={data.link}
-                      className="inline-block w-full rounded-md p-2 hover:bg-primary/20 transition-colors"
-                    >
-                      {data.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenu && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 overflow-hidden"
+          >
+            <div className="container py-8 flex flex-col gap-6">
+              {NavLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.link}
+                  onClick={() => setMobileMenu(false)}
+                  className="text-xl font-black uppercase tracking-widest text-gray-800 dark:text-white"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <div className="h-px bg-gray-100 dark:bg-gray-800" />
+              <div className="flex gap-4">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="flex-1 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 py-3 px-6 text-base"
+                />
+              </div>
             </div>
-          </li>
-        </ul>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

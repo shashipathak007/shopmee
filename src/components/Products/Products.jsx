@@ -3,7 +3,8 @@ import Img1 from "../../assets/women/women.png";
 import Img2 from "../../assets/women/women2.jpg";
 import Img3 from "../../assets/women/women3.jpg";
 import Img4 from "../../assets/women/women4.jpg";
-import { FaStar } from "react-icons/fa6";
+import { Star, ShoppingCart } from "lucide-react";
+import { motion } from "framer-motion";
 
 const ProductsData = [
   {
@@ -13,7 +14,6 @@ const ProductsData = [
     rating: 5.0,
     color: "White",
     price: "$45.00",
-    aosDelay: "0",
   },
   {
     id: 2,
@@ -22,7 +22,6 @@ const ProductsData = [
     rating: 4.5,
     color: "Red",
     price: "$32.00",
-    aosDelay: "200",
   },
   {
     id: 3,
@@ -31,7 +30,6 @@ const ProductsData = [
     rating: 4.7,
     color: "Brown",
     price: "$15.00",
-    aosDelay: "400",
   },
   {
     id: 4,
@@ -40,7 +38,6 @@ const ProductsData = [
     rating: 4.4,
     color: "Yellow",
     price: "$20.00",
-    aosDelay: "600",
   },
   {
     id: 5,
@@ -49,67 +46,85 @@ const ProductsData = [
     rating: 4.5,
     color: "Pink",
     price: "$25.00",
-    aosDelay: "800",
   },
 ];
 
 const Products = () => {
   return (
-    <section className="py-16 dark:bg-gray-950 dark:text-white transition-colors duration-300">
+    <section id="arrivals" className="py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
       <div className="container px-4">
         {/* Header Section */}
-        <div className="text-center mb-12 max-w-[600px] mx-auto space-y-2">
-          <p data-aos="fade-up" className="text-sm text-primary font-bold uppercase tracking-widest">
-            Top Selling Products
-          </p>
-          <h1 data-aos="fade-up" data-aos-delay="100" className="text-3xl sm:text-4xl font-bold">
+        <div className="text-center mb-20 max-w-3xl mx-auto space-y-4">
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-sm text-primary font-black uppercase tracking-[0.3em]"
+          >
+            Curated For You
+          </motion.p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white"
+          >
             Explore Our Collection
-          </h1>
-          <p data-aos="fade-up" data-aos-delay="200" className="text-sm text-gray-500">
-            Discover our handpicked selection of premium fashion items, curated for style and comfort.
-          </p>
+          </motion.h2>
+          <div className="w-20 h-1.5 bg-primary mx-auto rounded-full" />
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 place-items-center">
-          {ProductsData.map((data) => (
-            <div
-              data-aos="fade-up"
-              data-aos-delay={data.aosDelay}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-10">
+          {ProductsData.map((data, index) => (
+            <motion.div
               key={data.id}
-              className="group flex flex-col gap-2 w-full"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group"
             >
-              <div className="relative overflow-hidden rounded-xl shadow-md">
+              <div className="relative rounded-[2rem] overflow-hidden bg-gray-50 dark:bg-gray-900 aspect-[3/4] shadow-sm group-hover:shadow-2xl transition-all duration-500">
                 <img
                   src={data.img}
                   alt={data.title}
-                  className="h-[280px] w-full object-cover group-hover:scale-110 duration-500 transition-transform"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute top-2 right-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1">
-                   <FaStar className="text-yellow-400 text-xs" />
-                   <span className="text-xs font-bold">{data.rating}</span>
+                
+                {/* Rating Badge */}
+                <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/20">
+                   <Star size={14} className="fill-yellow-400 text-yellow-400" />
+                   <span className="text-sm font-black text-gray-900 dark:text-white">{data.rating}</span>
+                </div>
+
+                {/* Overlay Action */}
+                <div className="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/80 to-transparent">
+                  <button className="w-full bg-white text-gray-900 font-black py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors uppercase tracking-widest text-xs">
+                    <ShoppingCart size={16} /> Add To Cart
+                  </button>
                 </div>
               </div>
 
-              <div className="mt-2 text-center sm:text-left">
-                <h3 className="font-bold text-lg truncate" title={data.title}>
+              {/* Info Details */}
+              <div className="mt-6 px-2">
+                <p className="text-xs font-black text-primary uppercase tracking-widest mb-1">{data.color}</p>
+                <h3 className="font-bold text-lg text-gray-900 dark:text-white truncate mb-2">
                   {data.title}
                 </h3>
-                <div className="flex justify-center sm:justify-start items-center gap-2 mt-1">
-                   <p className="text-sm text-gray-500 dark:text-gray-400">{data.color}</p>
-                   <span className="h-1 w-1 bg-gray-300 rounded-full"></span>
-                   <p className="text-primary font-bold">{data.price}</p>
-                </div>
+                <p className="text-2xl font-black text-gray-900 dark:text-white">{data.price}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* View All Button */}
-        <div className="flex justify-center mt-12">
-          <button className="bg-gradient-to-r from-primary to-secondary text-white py-2 px-10 rounded-full hover:scale-105 duration-300 shadow-lg font-semibold uppercase tracking-wide">
+        {/* Action Button */}
+        <div className="flex justify-center mt-20">
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gray-950 dark:bg-primary text-white py-5 px-12 rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl hover:bg-primary dark:hover:bg-white dark:hover:text-primary transition-all duration-300"
+          >
             View All Products
-          </button>
+          </motion.button>
         </div>
       </div>
     </section>

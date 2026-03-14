@@ -1,8 +1,15 @@
 import React from "react";
-import { FiShoppingBag } from "react-icons/fi";
-import { FaMapLocationDot } from "react-icons/fa6";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { IoCall } from "react-icons/io5";
+import { 
+  Instagram, 
+  Facebook, 
+  Linkedin, 
+  MapPin, 
+  Phone, 
+  Mail, 
+  ShoppingBag,
+  ArrowRight
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 const FooterLinks = [
   { title: "Home", link: "/#" },
@@ -12,101 +19,118 @@ const FooterLinks = [
 ];
 
 const SocialLinks = [
-  { icon: <FaInstagram />, link: "#", label: "Instagram" },
-  { icon: <FaFacebook />, link: "#", label: "Facebook" },
-  { icon: <FaLinkedin />, link: "#", label: "Linkedin" },
+  { icon: Instagram, link: "#", label: "Instagram" },
+  { icon: Facebook, link: "#", label: "Facebook" },
+  { icon: Linkedin, link: "#", label: "Linkedin" },
 ];
 
 const Footer = () => {
   return (
-    <footer className="text-white bg-[#212529] dark:bg-gray-950 transition-colors duration-300">
-      <div className="container mx-auto">
-        <div data-aos="zoom-in" className="grid md:grid-cols-3 gap-10 py-12 px-4">
+    <footer className="bg-[#0e1111] text-white pt-24 transition-colors duration-300">
+      <div className="container px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 pb-20 border-b border-white/5">
           
-          {/* Company Details */}
-          <div className="flex flex-col gap-4">
-            <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
-              <FiShoppingBag className="text-primary" />
-              ShopMe
-            </h1>
-            <p className="text-gray-400 text-sm leading-7 max-w-[300px]">
-              ShopMe is your one-stop destination for all your shopping needs, 
-              offering a wide range of products with convenience and style.
+          {/* Brand Info */}
+          <div className="space-y-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="flex items-center gap-3"
+            >
+              <div className="bg-primary p-2 rounded-xl">
+                <ShoppingBag size={28} className="text-white" />
+              </div>
+              <span className="text-3xl font-black bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent italic">
+                ShopMe
+              </span>
+            </motion.div>
+            <p className="text-gray-400 text-lg font-medium leading-relaxed max-w-sm">
+              We bring the world's most premium fashion and accessories directly to your doorstep. Style is not just what you wear, it's how you live.
             </p>
+            <div className="flex gap-4">
+              {SocialLinks.map((social, index) => {
+                const Icon = social.icon;
+                return (
+                  <motion.a 
+                    key={index}
+                    whileHover={{ scale: 1.1, backgroundColor: "#fea928" }}
+                    href={social.link}
+                    className="h-12 w-12 flex items-center justify-center rounded-2xl bg-white/5 text-gray-400 hover:text-white border border-white/10 transition-colors shadow-xl"
+                  >
+                    <Icon size={20} />
+                  </motion.a>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Links Section */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 gap-8">
-            
-            {/* Column 1: Important Links */}
-            <div>
-              <h2 className="text-xl font-bold mb-4">Important Links</h2>
-              <ul className="flex flex-col gap-3">
-                {FooterLinks.map((link) => (
-                  <li key={link.title}>
-                    <a 
-                      href={link.link} 
-                      className="text-gray-400 hover:text-white hover:translate-x-1 duration-300 inline-block"
-                    >
-                      {link.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Quick Links */}
+          <div className="space-y-8">
+            <h3 className="text-xl font-black uppercase tracking-widest border-l-4 border-primary pl-4">Company</h3>
+            <ul className="space-y-4">
+              {FooterLinks.map((link) => (
+                <li key={link.title}>
+                  <a href={link.link} className="text-gray-400 hover:text-primary flex items-center gap-2 group transition-colors font-medium">
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    {link.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Column 2: Secondary Links */}
-            <div>
-              <h2 className="text-xl font-bold mb-4">Quick Links</h2>
-              <ul className="flex flex-col gap-3">
-                {FooterLinks.map((link) => (
-                  <li key={`sec-${link.title}`}>
-                    <a 
-                      href={link.link} 
-                      className="text-gray-400 hover:text-white hover:translate-x-1 duration-300 inline-block"
-                    >
-                      {link.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Customer Support */}
+          <div className="space-y-8">
+            <h3 className="text-xl font-black uppercase tracking-widest border-l-4 border-primary pl-4">Support</h3>
+            <ul className="space-y-4">
+              {["FAQ", "Shipping Policy", "Returns", "Size Guide"].map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-gray-400 hover:text-primary flex items-center gap-2 group transition-colors font-medium">
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Column 3: Contact & Socials */}
-            <div className="col-span-2 sm:col-span-1">
-              <h2 className="text-xl font-bold mb-4">Contact Us</h2>
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3 text-gray-400">
-                  <FaMapLocationDot className="text-xl shrink-0" />
-                  <p className="text-sm">Dhangadhi 5, Taranagar</p>
+          {/* Contact Details */}
+          <div className="space-y-8">
+            <h3 className="text-xl font-black uppercase tracking-widest border-l-4 border-primary pl-4">Contact</h3>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 group-hover:bg-primary/20 transition-colors">
+                  <MapPin size={20} className="text-primary" />
                 </div>
-                <div className="flex items-center gap-3 text-gray-400">
-                  <IoCall className="text-xl shrink-0" />
-                  <p className="text-sm">+977 9840287647</p>
+                <div>
+                  <p className="text-sm font-black uppercase tracking-tighter text-gray-500 mb-1">Office</p>
+                  <p className="text-gray-300 font-medium">Dhangadhi 5, Taranagar, Nepal</p>
                 </div>
-                
-                {/* Social Icons */}
-                <div className="flex items-center gap-4 mt-4">
-                  {SocialLinks.map((social, index) => (
-                    <a 
-                      key={index}
-                      href={social.link} 
-                      aria-label={social.label}
-                      className="text-3xl text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
+              </div>
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 group-hover:bg-primary/20 transition-colors">
+                  <Phone size={20} className="text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-black uppercase tracking-tighter text-gray-500 mb-1">Call Us</p>
+                  <p className="text-gray-300 font-medium">+977 9840287647</p>
                 </div>
               </div>
             </div>
-
           </div>
+
         </div>
 
-        {/* Bottom Footer Credits */}
-        <div className="border-t border-gray-700 py-6 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} ShopMe. All rights reserved.
+        {/* Closing */}
+        <div className="py-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+          <p className="text-gray-600 font-medium italic">
+            © {new Date().getFullYear()} <span className="text-primary font-black">ShopMe</span>. All rights reserved.
+          </p>
+          <div className="flex gap-8 text-xs font-black uppercase tracking-widest text-gray-600">
+            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="#" className="hover:text-white transition-colors">Cookies</a>
+          </div>
         </div>
       </div>
     </footer>

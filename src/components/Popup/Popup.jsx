@@ -1,84 +1,100 @@
-import React, { useRef } from "react";
-import { IoCloseOutline } from "react-icons/io5";
+import React, { useEffect } from "react";
+import { X, User, Mail, MapPin, CheckCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Popup = ({ orderPopup, setOrderPopup }) => {
-  const modalRef = useRef();
-
-  // Close popup when clicking on the backdrop
-  const closePopup = (e) => {
-    if (modalRef.current === e.target) {
-      setOrderPopup(false);
+  useEffect(() => {
+    if (orderPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
     }
-  };
-
-  if (!orderPopup) return null;
+  }, [orderPopup]);
 
   return (
-    <div 
-      ref={modalRef}
-      onClick={closePopup}
-      className="fixed inset-0 h-screen w-screen bg-black/50 z-50 backdrop-blur-sm flex justify-center items-center p-4"
-    >
-      <div 
-        data-aos="zoom-in"
-        className="bg-white dark:bg-gray-900 dark:text-white rounded-xl shadow-2xl duration-300 w-full max-w-[400px] overflow-hidden"
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
-          <h1 className="text-xl font-bold">Place Your Order</h1>
-          <button 
+    <AnimatePresence>
+      {orderPopup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={() => setOrderPopup(false)}
-            aria-label="Close modal"
+            className="absolute inset-0 bg-black/60 backdrop-blur-md"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative w-full max-w-lg bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-2xl overflow-hidden border border-white/20"
           >
-            <IoCloseOutline className="text-3xl text-gray-400 hover:text-primary transition-colors" />
-          </button>
-        </div>
-
-        {/* Body */}
-        <div className="p-6">
-          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium ml-1">Full Name</label>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
-                required
-              />
+            {/* Header */}
+            <div className="p-8 sm:p-10 border-b border-gray-100 dark:border-gray-800">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h2 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">Checkout</h2>
+                  <p className="text-gray-500 dark:text-gray-400 mt-1 font-medium">Please provide your details</p>
+                </div>
+                <button
+                  onClick={() => setOrderPopup(false)}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium ml-1">Email Address</label>
-              <input
-                type="email"
-                placeholder="example@gmail.com"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
-                required
-              />
-            </div>
+            {/* Form */}
+            <form onSubmit={(e) => e.preventDefault()} className="p-8 sm:p-10 space-y-6 text-gray-900 dark:text-white">
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                  <User size={14} className="text-primary" /> Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  className="w-full bg-gray-50 dark:bg-gray-950 border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 outline-none focus:border-primary transition-colors font-medium"
+                />
+              </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium ml-1">Delivery Address</label>
-              <textarea
-                placeholder="Your full address"
-                rows="3"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all resize-none"
-                required
-              />
-            </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                  <Mail size={14} className="text-primary" /> Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="john@example.com"
+                  className="w-full bg-gray-50 dark:bg-gray-950 border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 outline-none focus:border-primary transition-colors font-medium"
+                />
+              </div>
 
-            <div className="mt-2">
-              <button
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                  <MapPin size={14} className="text-primary" /> Address
+                </label>
+                <textarea
+                  placeholder="123 Luxury Ave, Fashion City"
+                  rows="3"
+                  className="w-full bg-gray-50 dark:bg-gray-950 border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 outline-none focus:border-primary transition-colors font-medium resize-none"
+                />
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary to-secondary hover:scale-105 active:scale-95 duration-200 text-white py-3 rounded-lg shadow-lg font-bold text-lg"
+                className="w-full bg-primary text-white py-5 rounded-2xl shadow-xl shadow-primary/20 flex items-center justify-center gap-2 text-lg font-black uppercase tracking-widest"
               >
-                Confirm Order
-              </button>
-            </div>
-          </form>
+                Place Order <CheckCircle size={20} />
+              </motion.button>
+            </form>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };
 

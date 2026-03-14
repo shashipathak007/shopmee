@@ -8,9 +8,8 @@ import Subscribe from "./components/Subscribe/Subscribe";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import Popup from "./components/Popup/Popup";
+import { motion, useScroll, useSpring } from "framer-motion";
 
-import AOS from "aos";
-import "aos/dist/aos.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -21,35 +20,34 @@ const App = () => {
     setOrderPopup(!orderPopup);
   };
 
-  useEffect(() => {
-    AOS.init({
-      offset: 100,
-      duration: 800,
-      easing: "ease-in-sine",
-      delay: 100,
-      once: false, 
-      mirror: true,
-    });
-    
-    const refreshAOS = () => AOS.refresh();
-    window.addEventListener("load", refreshAOS);
-    
-    return () => window.removeEventListener("load", refreshAOS);
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
-    <div className="bg-white dark:bg-gray-950 dark:text-white transition-colors duration-300 min-h-screen overflow-x-hidden">
+    <div className="bg-white dark:bg-gray-950 dark:text-gray-100 transition-colors duration-500 selection:bg-primary/30">
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[100] origin-left"
+        style={{ scaleX }}
+      />
+
       <Navbar handleOrderPopup={handleOrderPopup} />
-      <main>
+      
+      <main className="overflow-x-hidden">
         <Hero handleOrderPopup={handleOrderPopup} />
         <Products />
         <TopProducts handleOrderPopup={handleOrderPopup} />
         <Banner />
         <Subscribe />
-        <Products /> 
         <Testimonials />
       </main>
+
       <Footer />
+      
       <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
     </div>
   );

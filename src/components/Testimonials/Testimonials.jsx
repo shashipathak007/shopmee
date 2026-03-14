@@ -1,5 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
+import { Quote, Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TestimonialData = [
   {
@@ -21,7 +23,7 @@ const TestimonialData = [
     img: "https://picsum.photos/104/104",
   },
   {
-    id: 5,
+    id: 4,
     name: "Sachin Tendulkar",
     text: "ShopMe makes online shopping so easy and enjoyable. The website is user-friendly, and the checkout process is seamless.",
     img: "https://picsum.photos/103/103",
@@ -34,82 +36,77 @@ const Testimonials = () => {
     arrows: false,
     infinite: true,
     speed: 600,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
-    cssEase: "ease-in-out",
-    pauseOnHover: true,
-    pauseOnFocus: true,
+    autoplaySpeed: 4000,
+    cssEase: "cubic-bezier(0.4, 0, 0.2, 1)",
     responsive: [
-      {
-        breakpoint: 10000,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
 
   return (
-    <div className="py-16 mb-10 dark:bg-gray-950 dark:text-white transition-colors duration-300">
-      <div className="container">
-        <div className="text-center mb-12 max-w-[600px] mx-auto space-y-2">
-          <p data-aos="fade-up" className="text-sm text-primary font-bold uppercase tracking-widest">
-            What our customers are saying
-          </p>
-          <h1 data-aos="fade-up" data-aos-delay="100" className="text-3xl sm:text-4xl font-bold">
-            Testimonials
-          </h1>
-          <p data-aos="fade-up" data-aos-delay="200" className="text-sm text-gray-400">
-            Hear directly from our satisfied customers about their amazing experiences with ShopMe.
-          </p>
+    <section className="py-24 bg-white dark:bg-gray-950 transition-colors duration-300 relative overflow-hidden">
+      {/* Decorative Gradient */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] -z-0" />
+
+      <div className="container relative z-10">
+        <div className="text-center mb-20 space-y-4">
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-primary font-black uppercase tracking-[0.3em] text-sm"
+          >
+            Our Community
+          </motion.p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-4xl sm:text-6xl font-black text-gray-900 dark:text-white"
+          >
+            Voice of Our Customers
+          </motion.h2>
+          <div className="w-20 h-1.5 bg-primary mx-auto rounded-full" />
         </div>
 
-        <div data-aos="zoom-in">
+        <div className="mx-[-20px]">
           <Slider {...settings}>
             {TestimonialData.map((data) => (
-              <div key={data.id} className="my-6">
-                <div className="flex flex-col gap-4 shadow-xl py-8 px-6 mx-4 rounded-2xl dark:bg-gray-800 bg-primary/10 relative group hover:bg-primary/20 dark:hover:bg-gray-700 transition-all duration-300 min-h-[250px]">
-                  <div className="mb-4">
-                    <img
-                      src={data.img}
-                      alt={data.name}
-                      className="rounded-full w-20 h-20 object-cover border-4 border-white dark:border-gray-600 shadow-md"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p className="text-sm text-gray-500 dark:text-gray-300 leading-relaxed italic">
+              <div key={data.id} className="p-5">
+                <motion.div 
+                  whileHover={{ y: -10 }}
+                  className="h-full bg-white dark:bg-gray-900 p-10 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-gray-100 dark:border-gray-800 relative group transition-all duration-500"
+                >
+                  <Quote size={60} className="absolute top-8 right-10 text-primary/10 group-hover:text-primary/20 transition-colors" />
+                  
+                  <div className="flex flex-col gap-6 h-full">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={data.img}
+                        alt={data.name}
+                        className="w-16 h-16 rounded-full border-4 border-primary/20 object-cover"
+                      />
+                      <div>
+                        <h4 className="font-black text-gray-900 dark:text-white text-xl">{data.name}</h4>
+                        <div className="flex gap-1 text-yellow-400">
+                          {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <p className="text-gray-500 dark:text-gray-400 text-lg italic leading-relaxed font-medium">
                       "{data.text}"
                     </p>
-                    <h1 className="text-xl font-bold text-black/80 dark:text-white">
-                      {data.name}
-                    </h1>
                   </div>
-                  <p className="text-primary/10 text-9xl font-serif absolute top-0 right-4 pointer-events-none">
-                    ,,
-                  </p>
-                </div>
+                </motion.div>
               </div>
             ))}
           </Slider>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
