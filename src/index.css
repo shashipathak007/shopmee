@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --color-primary: #fea928;
   --color-secondary: #ed8900;
@@ -38,7 +40,10 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-950;
+  @apply bg-gray-100;
+}
+.dark ::-webkit-scrollbar-track {
+  @apply bg-gray-950;
 }
 ::-webkit-scrollbar-thumb {
   @apply bg-primary/50 rounded-full hover:bg-primary;
